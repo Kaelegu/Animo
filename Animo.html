@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página del Corazón</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: pink;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-family: sans-serif;
+    }
+
+    .contenedor {
+      width: 100px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .corazon {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      background-color: red;
+      transform: rotate(-45deg);
+    }
+
+    .corazon::before,
+    .corazon::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .corazon::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .corazon::after {
+      top: 0;
+      left: 50px;
+    }
+
+    .mensaje {
+      position: absolute;
+      top: 20%;
+      background-color: white;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .mostrar {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor" onclick="mostrarMensaje()">
+    <div class="corazon"></div>
+  </div>
+  <div id="mensaje" class="mensaje"></div>
+
+  <script>
+    const mensajes = [
+      "¡Te amo demasiado! 💖",
+      "Eres sequisima 🌟",
+      "Eres mi sol ☀️",
+      "Te va a ir excelente",
+      "Te extraño 💌",
+      "Confía en lo que sabes 😊",
+      "Eres maravillosa",
+      "Vas a estar excelente en la práctica",
+      "Me fascinas demasiado 💖",
+      "Todo te va a salir super",
+      "Eres un amor en todo sentido"
+    ];
+
+    let indiceMensaje = 0;
+    let timeoutId = null;
+
+    function mostrarMensaje() {
+      const mensaje = document.getElementById("mensaje");
+
+      // Cancelar timeout anterior si existe
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        mensaje.classList.remove("mostrar");
+        void mensaje.offsetWidth; // Forzar reflow para reiniciar transición
+      }
+
+      mensaje.textContent = mensajes[indiceMensaje];
+      mensaje.classList.add("mostrar");
+
+      timeoutId = setTimeout(() => {
+        mensaje.classList.remove("mostrar");
+        timeoutId = null;
+      }, 3000);
+
+      indiceMensaje = (indiceMensaje + 1) % mensajes.length;
+    }
+  </script>
+</body>
+</html>
